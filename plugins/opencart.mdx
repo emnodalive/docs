@@ -1,0 +1,48 @@
+---
+title: 'Opencart'
+---
+
+<PluginNote />
+
+Rocka offers plugins for seamless integration with OpenCart 3 and OpenCart 4. The plugins support English, German, Latvian, Lithuanian, Estonian, Finnish and Romanian.
+
+## Requirements
+
+* PHP version **7.4** to **8.0**.
+* OpenCart version **3.0.x.x** or greater.
+
+## Install the plugin
+
+<a href="https://pluginrepositorynew.blob.core.windows.net/plugin-repository/latest/op3-rocka.ocmod.zip" class="download-button"><i class="fa-solid fa-download" /> Download plugin (OpenCart 3)</a>
+
+<a href="https://pluginrepositorynew.blob.core.windows.net/plugin-repository/latest/rockalive.ocmod.zip" class="download-button"><i class="fa-solid fa-download" /> Download plugin (OpenCart 4) </a>
+
+1. Download the extension archive file.
+2. On your OpenCart site, go to **Admin**.
+3. Click **Extensions**.
+4. Click **Installer** > **Upload** and upload the plugin file from your computer.
+
+## Configure the plugin
+
+1. In your admin panel, select **Extensions** → **Extensions** → **Payments** on the left-hand sidebar.
+2. Find the Rocka plugin and click **Install**.
+3. Click <i class="fa-solid fa-pen" /> **Edit**.
+
+### Get started
+
+* **Order Statuses Settings**: you can configure which OpenCart order statuses will be assigned to successful and failed orders. For example, if the payment is marked as completed by the payment system, the status will be set to what you choose under Approved.
+* **Order Status** is the default status that is assigned to a new order before it is processed.
+* **Rocka title** (OpenCart 3 only) is the name of the payment method your customers will see. It is set to Pay by Bank by default.
+* **Sort Order** configures the order in which the payment methods will appear on your checkout page. For example, 1 means that the payment method will be on top of the list.
+* **Return URL** is the URL your customers are redirected to after they complete the payment. This URL is used by the payment gateway to bring the customer back to your site and, if applicable, pass the transaction status back to you. You can set up a custom URL here if you need customers to be redirected to a specific page (for example, a Thank you page). If you leave this field blank, your customers will see the default OpenCart order confirmation page.
+* Your **API key** and **Signature Key** are your personal credentials. You can find them in your <Anchor label="Rocka Hub" target="_blank" href="https://hub.rocka.live/integration">Rocka Hub</Anchor>.
+* Your **Shop ID** is your personal identifier. You can find it in your <Anchor label="Rocka Hub" target="_blank" href="https://hub.rocka.live/account/websites">Rocka Hub</Anchor>.
+* **Enable Buffet** sets the payment method layout of your checkout page. If set to yes (the default value), your checkout will display a group of buttons for the five most popular banks based on the customer’s billing country. If not, the Pay by Bank button will be displayed instead.
+* For OpenCart 4, you can change the colour of the payment button under Button theme.
+* If **Enable Customer Email Notification** (OpenCart 3 only) is on, customers will receive an email upon completing the payment. Note that additional mailing server configuration is required.
+* If **Disable Custom Button For Order Confirmation** (OpenCart 3 only) is set to **No**, your customised Pay by Bank button will be displayed. If it is set to Yes, the default Confirm order button will be used. This setting only works if Rocka Buffet is disabled.
+
+When you install the plugin, the fields API Key, Signature Key and Shop ID are auto-filled to help you test the plugin. To go live:
+
+1. Under **Enable test mode** on the plugin configuration page, uncheck the **Enable test mode** box.
+2. Replace the API Key, Signature Key and Shop ID with your credentials, found in your Rocka Hub.
