@@ -3,9 +3,9 @@
   "theme": "palm",
   "name": "Rocka",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#1964bd",
+    "light": "#1964bd",
+    "dark": "#1964bd"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -60,7 +60,7 @@
     ]
   },
   "logo": {
-    "light": "/logo/rocka_red.svg",
+    "light": "/logo/rocka_blue.svg",
     "dark": "/logo/dark.svg"
   },
   "navbar": {
