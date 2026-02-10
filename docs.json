@@ -29,7 +29,11 @@
         "groups": [
           {
             "group": "Getting started",
-            "pages": []
+            "pages": [
+              "getting-started/introduction",
+              "getting-started/test-your-integration",
+              "getting-started/rocka-faq"
+            ]
           }
         ]
       },
