@@ -34,6 +34,12 @@
               "getting-started/test-your-integration",
               "getting-started/rocka-faq"
             ]
+          },
+          {
+            "group": "Open banking",
+            "pages": [
+              "open-banking/buffet"
+            ]
           }
         ]
       },

@@ -1,0 +1,110 @@
+---
+title: "Rocka Buffet"
+---
+
+**Rocka Buffet** displays payment buttons featuring major banks in your customer's country. This allows for fast and seamless payments that customers confirm directly through their bank.
+
+## Set up Rocka Buffet
+
+To set up Rocka Buffet, use these API endpoints:
+
+1. `GET /providers/top`
+2. `POST /payments`
+
+`GET /providers/top` retrieves the list of top banks in your customer's country. The metadata provided for each bank includes its unique `id`. To initiate a payment directly through any given bank, use `POST /payments` and pass the bank's ID as the `provider_id`.
+
+### Sample requests and responses
+
+#### Step 1. Retrieve banks
+
+Sample request and response retrieving the list of France's top banks:
+
+<Accordion title="Sample request" icon="code">
+  ```curl
+  curl --request GET \
+     --url 'https://api.rocka.live/api/providers/top?country=FR&count=3' \
+     --header 'accept: application/json' \
+     --header 'x-api-key:'
+  ```
+</Accordion>
+
+<Accordion title="Sample response" icon="code">
+  ```json
+  [
+  {
+    "id": "caisse_d_epargne_fr",
+    "name": "Caisse d'Epargne",
+    "logoUrl": "https://cdn.rocka.live/storage/shared/bank-logo/circle/caisse-d-epargne.svg",
+    "iin": 487840,
+    "isInstant": true
+  },
+  {
+    "id": "bnp_paribas_fr",
+    "name": "BNP Paribas",
+    "logoUrl": "https://cdn.rocka.live/storage/shared/bank-logo/circle/bnp-paribas.svg",
+    "iin": 265401,
+    "isInstant": true
+  },
+  {
+    "id": "la_banque_postale_fr",
+    "name": "La Banque Postale",
+    "logoUrl": "https://cdn.rocka.live/storage/shared/bank-logo/circle/la-banque-postale.svg",
+    "iin": 415059,
+    "isInstant": true
+  }
+  ]
+  ```
+</Accordion>
+
+#### Step 2. Create a payment
+
+The `POST /payments` endpoint initiates a new pending payment and returns the checkout URL (`url`) that you can redirect your customer to. It also returns the payment's ID.
+
+Sample request and response generating a new payment through La Banque Postale:
+
+<Accordion title="Sample request" icon="fa-code">
+  ```curl
+  curl --request POST \
+     --url https://api.stage.rocka.live/api/payments \
+     --header 'accept: application/json' \
+     --header 'content-type: text/json' \
+     --header 'x-api-key: 24d0034-5a83-47d5-afa0-cca47298c516' \
+     --data '
+  {
+  "amount": 1.45,
+  "currency": "EUR",
+  "returnUrl": "https://example.com/returnurl",
+  "paymentId": "9318-123-test-1423",
+  "description": "Order 1234-DS-1234",
+  "providerId": "la_banque_postale_fr", // include the providerId parameter
+  "email": "test@email.com"
+  }
+  '
+  ```
+</Accordion>
+
+<Accordion title="Sample response" icon="fa-code">
+  ```json
+  {
+  "id": "4aa4db5c-cc7e-4e93-8742-673c5086e2d3",
+  "url": "https://checkout.rocka.live/buffet?id=4aa4db5c-cc7e-4e93-8742-673c5086e2d3&token=v4.local.Q1Q1YG9hBPj4dJKSEHtVolAGmsPosmSAmIO_Vpot-mrReibibUtSmuTt0yGryC7F8tRYI3t4c5FVJ-iHp1laliPfW0M5IVPG5zraxmlBoF66AI3PWlIGY3drhFySNTmxfoqrpDsxfS3tLRI4n7cJXQ3RzTAhZPaf3WmVewU9OOZcYPHhjsItR8AgxgVLIijegxwPyrXTPAvBulJjkM3yjsWYkvHK8A1YPDheCnsq06dlEMNqHWACiTtDCyfK_0ir8VTzU1k_SpQikGehrcQmn4u8v0tr4xL36yWj7Be-AVx8GbJ-mIazaD7x4uKbrUmODuaoW6uy_QI6HeWJSsMH4ui-VL7LRTi91hgXJTc8966sTwRsU6S--bsi_ifOiCsm50Cq5HFLmejcxh92yJenOJIxLCx1MRscmWznBMI",
+  "qrCode": null,
+  "token": "v4.local.Q1Q1YG9hBPj4dJKSEHtVolAGmsPosmSAmIO_Vpot-mrReibibUtSmuTt0yGryC7F8tRYI3t4c5FVJ-iHp1laliPfW0M5IVPG5zraxmlBoF66AI3PWlIGY3drhFySNTmxfoqrpDsxfS3tLRI4n7cJXQ3RzTAhZPaf3WmVewU9OOZcYPHhjsItR8AgxgVLIijegxwPyrXTPAvBulJjkM3yjsWYkvHK8A1YPDheCnsq06dlEMNqHWACiTtDCyfK_0ir8VTzU1k_SpQikGehrcQmn4u8v0tr4xL36yWj7Be-AVx8GbJ-mIazaD7x4uKbrUmODuaoW6uy_QI6HeWJSsMH4ui-VL7LRTi91hgXJTc8966sTwRsU6S--bsi_ifOiCsm50Cq5HFLmejcxh92yJenOJIxLCx1MRscmWznBMI",
+  "threeDsData": null,
+  "status": "New"
+  }
+  ```
+</Accordion>
+
+### Step 3. Retrieve payment status
+
+When creating the payment, you can specify the `returnUrl` the customer will be redirected to once the payment is completed or the `webhookUrl` for payment status updates:
+
+```curl
+{
+  "webhookUrl": "https://example.com/hookurl",
+  "returnUrl": "https://example.com/returnurl"
+}
+```
+
+For more details, see Retrieve a payment.
