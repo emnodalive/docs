@@ -1,160 +1,119 @@
-{
-  "openapi": "3.0.1",
-  "info": {
-    "title": "Noda.Balance",
-    "version": "v1"
-  },
-  "paths": {
-    "/balances/api/balance": {
-      "get": {
-        "tags": [
-          "Balance"
-        ],
-        "summary": "Check your balance",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "currency",
-            "description": "The ISO code of the currency you want to check your balance for. For example, EUR or GBP.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "EUR"
-            }
-          },
-          {
-            "in": "query",
-            "name": "type",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "payin",
-                "payout"
-              ],
-              "example": "payin"
-            },
-            "description": "To check your payment balance, select payin. To check your payout balance, select payout.",
-            "required": true
-          },
-          {
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "date-time",
-              "example": "2025-06-18"
-            },
-            "name": "date",
-            "description": "Balance timestamp in the YYYY-MM-DD format. For example, 2025-06-18 for June 18th, 2025.",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "amount": {
-                      "type": "integer",
-                      "description": "The amount on your balance."
-                    },
-                    "currency": {
-                      "type": "string",
-                      "description": "Balance currency."
-                    },
-                    "type": {
-                      "type": "string",
-                      "description": "Balance type."
-                    },
-                    "date": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "Balance timestamp."
-                    }
-                  }
-                },
-                "example": {
-                  "amount": 53.93,
-                  "currency": "EUR",
-                  "type": "payin",
-                  "date": "2025-06-18"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "This response means you do not have any of that currency on your balance."
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "Noda.Balance.Database.Entities.Enums.BalanceType": {
-        "enum": [
-          "payin",
-          "payout"
-        ],
-        "type": "string"
-      },
-      "Noda.Balance.Database.Entities.Enums.Currency": {
-        "type": "string"
-      },
-      "Check_Balance": {
-        "type": "object",
-        "title": "Check_Balance",
-        "x-examples": {
 
-        },
-        "properties": {
-          "currency": {
-            "type": "string",
-            "description": "The ISO code of the currency you want to check your balance for. For example, EUR or GBP."
-          },
-          "type": {
-            "type": "string",
-            "description": "Whether you want to check your payin or payout balance.",
-            "enum": [
-              "payin",
-              "payout"
-            ]
-          },
-          "date": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Balance timestamp in the YYYY-MM-DD format. For example, 2025-06-18 for July 18th, 2025."
-          }
-        },
-        "required": [
-          "currency",
-          "type",
-          "date"
-        ],
-        "description": ""
-      }
-    },
-    "securitySchemes": {
-      "APIToken": {
-        "type": "apiKey",
-        "name": "x-api-key",
-        "description": "### To run requests, you need an API key. \n\n**Test keys**\n\n**Sandbox**: \n- x-api-key: *24d0034-5a83-47d5-afa0-cca47298c516* for the DEVELOPMENT environment. \n- Signature key: *028b9b98-f250-492c-a63a-dfd7c112cc0a* for the DEVELOPMENT environment.\n- shopId: *d0c3ccd9-162c-497e-808b-e769aea89c58* for the DEVELOPMENT environment. \n To get your own production API keys, complete your onboarding.",
-        "in": "header",
-        "x-default": "24d0034-5a83-47d5-afa0-cca47298c516"
-      }
-    }
-  },
-  "security": [
-    {
-      "APIToken": []
-    }
-  ],
-  "servers": [
-    {
-      "url": "https://api.stage.rocka.live",
-      "description": "SANDBOX"
-    }
-  ]
-}
+openapi: 3.0.1
+info:
+  title: Noda.Balance
+  version: v1
+paths:
+  "/balances/api/balance":
+    get:
+      tags:
+      - Balance
+      summary: Check your balance
+      parameters:
+      - in: query
+        name: currency
+        description: The ISO code of the currency you want to check your balance for.
+          For example, EUR or GBP.
+        required: true
+        schema:
+          type: string
+          example: EUR
+      - in: query
+        name: type
+        schema:
+          type: string
+          enum:
+          - payin
+          - payout
+          example: payin
+        description: To check your payment balance, select payin. To check your payout
+          balance, select payout.
+        required: true
+      - in: query
+        schema:
+          type: string
+          format: date-time
+          example: '2025-06-18'
+        name: date
+        description: Balance timestamp in the YYYY-MM-DD format. For example, 2025-06-18
+          for June 18th, 2025.
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  amount:
+                    type: integer
+                    description: The amount on your balance.
+                  currency:
+                    type: string
+                    description: Balance currency.
+                  type:
+                    type: string
+                    description: Balance type.
+                  date:
+                    type: string
+                    format: date-time
+                    description: Balance timestamp.
+              example:
+                amount: 53.93
+                currency: EUR
+                type: payin
+                date: '2025-06-18'
+        '404':
+          description: This response means you do not have any of that currency on
+            your balance.
+components:
+  schemas:
+    Noda.Balance.Database.Entities.Enums.BalanceType:
+      enum:
+      - payin
+      - payout
+      type: string
+    Noda.Balance.Database.Entities.Enums.Currency:
+      type: string
+    Check_Balance:
+      type: object
+      title: Check_Balance
+      x-examples: {}
+      properties:
+        currency:
+          type: string
+          description: The ISO code of the currency you want to check your balance
+            for. For example, EUR or GBP.
+        type:
+          type: string
+          description: Whether you want to check your payin or payout balance.
+          enum:
+          - payin
+          - payout
+        date:
+          type: string
+          format: date-time
+          description: Balance timestamp in the YYYY-MM-DD format. For example, 2025-06-18
+            for July 18th, 2025.
+      required:
+      - currency
+      - type
+      - date
+      description: ''
+  securitySchemes:
+    APIToken:
+      type: apiKey
+      name: x-api-key
+      description: "### To run requests, you need an API key. \n\n**Test keys**\n\n**Sandbox**:
+        \n- x-api-key: *24d0034-5a83-47d5-afa0-cca47298c516* for the DEVELOPMENT environment.
+        \n- Signature key: *028b9b98-f250-492c-a63a-dfd7c112cc0a* for the DEVELOPMENT
+        environment.\n- shopId: *d0c3ccd9-162c-497e-808b-e769aea89c58* for the DEVELOPMENT
+        environment. \n To get your own production API keys, complete your onboarding."
+      in: header
+      x-default: 24d0034-5a83-47d5-afa0-cca47298c516
+security:
+- APIToken: []
+servers:
+- url: https://api.stage.rocka.live
+  description: SANDBOX
