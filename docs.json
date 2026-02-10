@@ -87,6 +87,6 @@
     }
   },
   "api": {
-    "openapi": "openapi.yaml"
+    "openapi": "/api-reference/openapi.yaml"
   }
 }
