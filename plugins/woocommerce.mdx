@@ -1,0 +1,80 @@
+---
+title: 'WooCommerce'
+---
+
+
+## Requirements
+
+* You must have admin privileges on your WordPress site.
+* PHP version **7.4** or greater (you can check your version in **Tools** > **Site Health** > **Info** > **Server**)
+* WordPress version **6.3** or greater (you can check your version in **Tools** > **Site Health** > **Info** > **WordPress**)
+* WooCommerce version **9.3.0** or greater. For older versions of WooCommerce, the Noda plugin will be deactivated automatically.
+
+## Step 1. Set up the plugin
+
+<Accordion title="1.1. Download and install the plugin">
+  <a href="https://pluginrepositorynew.blob.core.windows.net/plugin-repository/latest/woo-noda-payments.zip" class="download-button"><i class="fa-solid fa-download" /> Download plugin</a>
+
+  <br />
+
+  1. Download the plugin archive file.
+  2. In your WordPress admin panel, click **Plugins** on the left-hand sidebar.
+  3. Click **Add plugin** > **Upload plugin**.
+  4. Click **Choose file** and select `woo-noda-payments.zip` on your computer.
+  5. Click **Install now**.
+</Accordion>
+
+<Accordion title="1.2. Enable the plugin">
+  1. In your WordPress admin panel, click **WooCommerce** on the left-hand sidebar.
+  2. Click **Settings** > **Payments**.
+  3. Make sure the Rocka plugin is enabled. Click **Manage** next to it.
+
+</Accordion>
+
+## Step 2. Configure the plugin
+
+**General settings**:
+
+* You can set a custom **Title**, which is the name of the payment method your customers will see. By default, it is set to Pay by Bank.
+* **API key and Signature key**: your personal credentials that you can find in your [Rocka Hub](https://hub.rocka.live/integration). In sandbox mode, use test credentials. To help you test the plugin, the API Key, Signature Key and Shop ID fields are auto-filled with default values.
+* Your **Shop ID** is your personal identifier. You can find it in your [Rocka Hub](https://hub.rocka.live/account/websites) .
+* **Buffet Banks Count** sets the number of bank buttons that will be displayed in the Buffet interface. You can set it to either five or nine.
+* **Change Terms and Conditions location?** lets you move the Terms and Conditions block for checkout when the Buffet interface is active (this does not apply to checkout blocks). If you set this to Yes, the Terms and Conditions block will be placed under the Buffet interface. If not, the block will be displayed at the bottom of the page.
+* **Description** is the description the customer sees on the checkout page.
+
+In **Visual Settings**, you can customise the appearance of your payment buttons, such as the label (set to Place Order by default) and the colour.
+
+**Order Statuses Settings**:
+
+* **Order Statuses Settings**: you can configure which OpenCart order statuses will be assigned to successful and failed orders. For example, if the payment is marked as completed by the payment system, the status will be set to what you choose under Approved.
+* **Order Status** is the default status that is assigned to a new order before it is processed.
+
+### Going out of test mode
+
+When you install the plugin, the fields API Key, Signature and Shop ID are auto-filled to help you test the plugin. To go live:
+
+1. Uncheck the **Test mode** box.
+2. Replace API Key, Signature Key and Shop ID with your credentials, found in your Noda Hub.
+
+### Add customised payment buttons
+
+To customise the appearance of your payment buttons, go to **Visual Settings** on the plugin configuration page. You can set a custom label and change the colour of the button (white, black or purple).
+
+If you do not customise the buttons, your customers will see the default Place order button.
+
+### Add Rocka Buffet
+
+For more details on Rocka Buffet, see [Rocka Buffet](doc:rocka-buffet).
+
+To display the Buffet interface, go to **Additional Bank selection settings** on the plugin configuration page and select **Yes** from the dropdown.
+
+## Configure card payments
+
+To use the card payment form, you need to:
+
+1. Set up the integration for Open Banking payments (API Key, Signature Key, Shop ID).
+2. Submit a request through the [Rocka Support Portal](https://get.support.rocka.live/) to activate card payments.
+3. Enable Rocka Card Payments.
+
+By default, your customers will see Card Payment as the payment method name. You can change it in your admin dashboard.
+
