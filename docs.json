@@ -55,7 +55,7 @@
            {
             "group": "Plugins",
             "pages": [
-              "plugins/plugin integrations",
+              "plugins/about-plugins",
               "plugins/woocommerce",
               "plugins/opencart",
               "plugins/magento",
