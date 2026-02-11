@@ -107,7 +107,7 @@ components:
     APIToken:
       type: apiKey
       name: x-api-key
-      description: "### To run requests, you need an API key. To get your own production API keys, complete your onboarding."
+      description: "To run requests, you need an API key. To get your own sandbox and production API keys, complete your onboarding."
       in: header
       x-default: 24d0034-5a83-47d5-afa0-cca47298c516
 security:
