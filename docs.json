@@ -11,16 +11,7 @@
   "navigation": {
     "global": {
       "anchors": [
-        {
-          "anchor": "Documentation",
-          "icon": "book-open-cover",
-          "href": "https://mintlify.com/docs"
-        },
-        {
-          "anchor": "Blog",
-          "icon": "newspaper",
-          "href": "https://mintlify.com/blog"
-        }
+        
       ]
     },
     "tabs": [
@@ -38,7 +29,38 @@
           {
             "group": "Open banking",
             "pages": [
-              "open-banking/buffet"
+              "open-banking/start-accepting-payments",
+              "open-banking/about-payment-statuses",
+              "open-banking/display-customised-payment-buttons",
+              "open-banking/buffet",
+              "open-banking/create-instant-payment-links"
+            ]
+          },
+          {
+            "group": "Card payments",
+            "pages": [
+              "card-payments/about-card-payments",
+              "card-payments/integrate-card-payments",
+              "card-payments/test-card-data"
+            ]
+          },
+           {
+            "group": "Payouts",
+            "pages": [
+              "payouts/issue-payouts",
+              "payouts/view-payout-metadata",
+              "payouts/about-payout-statuses"
+            ]
+          },
+           {
+            "group": "Plugins",
+            "pages": [
+              "plugins/plugin integrations",
+              "plugins/woocommerce",
+              "plugins/opencart",
+              "plugins/magento",
+              "plugins/prestashop",
+              "plugins/bigcommerce"
             ]
           }
         ]

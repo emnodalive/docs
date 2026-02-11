@@ -9,6 +9,8 @@ paths:
       tags:
       - Balance
       summary: Check your balance
+      x-content:
+        description: test
       parameters:
       - in: query
         name: currency
@@ -105,11 +107,7 @@ components:
     APIToken:
       type: apiKey
       name: x-api-key
-      description: "### To run requests, you need an API key. \n\n**Test keys**\n\n**Sandbox**:
-        \n- x-api-key: *24d0034-5a83-47d5-afa0-cca47298c516* for the DEVELOPMENT environment.
-        \n- Signature key: *028b9b98-f250-492c-a63a-dfd7c112cc0a* for the DEVELOPMENT
-        environment.\n- shopId: *d0c3ccd9-162c-497e-808b-e769aea89c58* for the DEVELOPMENT
-        environment. \n To get your own production API keys, complete your onboarding."
+      description: "### To run requests, you need an API key. To get your own production API keys, complete your onboarding."
       in: header
       x-default: 24d0034-5a83-47d5-afa0-cca47298c516
 security:
