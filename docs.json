@@ -73,7 +73,7 @@
   },
   "logo": {
     "light": "/logo/rocka_blue.svg",
-    "dark": "/logo/dark.svg"
+    "dark": "/logo/rocka_blue_dark.svg"
   },
   "navbar": {
     "links": [
