@@ -3,6 +3,9 @@ openapi: 3.0.1
 info:
   title: Noda.Balance
   version: v1
+servers:
+- url: https://api.stage.rocka.live
+  description: Sandbox
 paths:
   "/balances/api/balance":
     get:
@@ -69,6 +72,203 @@ paths:
         '404':
           description: This response means you do not have any of that currency on
             your balance.
+  "/api/payments/logo":
+    post:
+      operationId: Payment_LogoUrl
+      requestBody:
+        content:
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/Request_Logo"
+            examples:
+              'Example: United Kingdom button (defined by a payment currency)':
+                value:
+                  currency: GBP
+              'Example: pay with Lloyds Bank button (defined by customer''s card IIN)':
+                value:
+                  currency: GBP
+                  iin: 429504
+              'Example: Germany button (defined by customers IP address)':
+                value:
+                  currency: EUR
+                  ipAddress: 80.128.241.96
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Request_Logo"
+          application/json-patch+json:
+            schema:
+              "$ref": "#/components/schemas/Request_Logo"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/Request_Logo"
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+        required: true
+        description: ''
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/LogoData"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/LogoData"
+            text/plain:
+              schema:
+                "$ref": "#/components/schemas/LogoData"
+          description: ''
+      security:
+      - APItoken: []
+      tags: []
+      x-codegen-request-body-name: request
+      summary: Display customised payment buttons
+      description: ''
+  "/api/payments":
+    post:
+      operationId: Payment_PaymentUrl
+      requestBody:
+        content:
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/Request2"
+            examples:
+              Single EUR payment:
+                value:
+                  amount: 1.24
+                  currency: EUR
+                  customerId: CID-012456789-1
+                  description: Order 1234-DS-1234
+                  shopId: d0c3ccd9-162c-497e-808b-e769aea89c58
+                  paymentId: 119318-123-test-1423
+                  returnUrl: https://myshop.com/returnurl
+                  webhookUrl: https://myshop.com/hookurl
+              GBP Payment:
+                value:
+                  amount: 1
+                  currency: GBP
+                  customerId: GR-12456
+                  description: Order 1412-DS-2
+                  email: string
+                  shopId: string
+                  ipAddress: string
+                  paymentId: 119318-123dsa-14
+                  returnUrl: https://myshop.com/return
+                  webhookUrl: https://myshop.com/hook
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Request2"
+          application/json-patch+json:
+            schema:
+              "$ref": "#/components/schemas/Request2"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/Request2"
+          application/xml:
+            schema:
+              type: object
+        required: true
+        description: ''
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response3"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/Response3"
+            text/plain:
+              schema:
+                "$ref": "#/components/schemas/Response3"
+          description: ''
+        '400':
+          description: One of the required parameters is missing or has an incorrect
+            value.
+      security:
+      - APItoken: []
+      tags: []
+      x-codegen-request-body-name: request
+      summary: Create a payment
+      description: ''
+  "/api/payments/{id}":
+    get:
+      operationId: Payment_Get
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          description: The payment's ID, which is returned by the payment creation
+            request and can also be found in your Rocka Hub.
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+              examples: {}
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+            text/plain:
+              schema:
+                "$ref": "#/components/schemas/Response"
+          description: ''
+      security:
+      - APItoken: []
+      tags: []
+      summary: Check payment status
+      description: ''
+  "/api/providers/top":
+    get:
+      operationId: Get_Providers_Top
+      parameters:
+      - in: query
+        name: country
+        schema:
+          type: string
+          default: FR
+        description: Country's ISO 3166 code. For example, DE for Germany or FR for
+          France.
+        required: true
+      - in: query
+        name: count
+        schema:
+          type: integer
+          default: 5
+        description: Number of banks to retrieve. Optional.
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/ProviderInfo"
+            text/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/ProviderInfo"
+            text/plain:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/ProviderInfo"
+          description: ''
+      security:
+      - APItoken: []
+      tags: []
+      x-internal: false
+      summary: Get the list of top banks
+      description: ''
+    parameters: []
+
+
 components:
   schemas:
     Noda.Balance.Database.Entities.Enums.BalanceType:
@@ -103,15 +303,289 @@ components:
       - type
       - date
       description: ''
+
+---
+components:
+  schemas:
+    Request_Logo:
+      type: object
+      title: Request_Logo
+      x-examples: {}
+      properties:
+        currency:
+          type: string
+          description: 'Payment currency. Currently accepted: {GBP, EUR}'
+        customerId:
+          type: string
+          description: Customer's unique identifier in your records.
+        email:
+          type: string
+          description: Customer's email address.
+        ipAddress:
+          type: string
+          description: Customer's IP address.
+        country:
+          type: string
+          description: Customer's country's ISO 3166 code. For example, DE for Germany
+            or FR for France.
+      required:
+      - currency
+      description: ''
+    Request2:
+      type: object
+      title: Request_Payment
+      description: Information for the new payment creation
+      x-examples:
+        Single GBP payment:
+          value:
+            amount: 1
+            currency: GBP
+            returnUrl: https://soundflare.com/order/20039471/complete
+            webhookUrl: https://api.soundflare.com/order/20039471/complete
+            shopId: d0c3ccd9-162c-497e-808b-e769aea89c58
+            description: Membership on SoundFlare
+            paymentId: '20039471'
+            customerId: 2145-a12
+            ipAddress: 145.12.55.11
+        Single EUR payment:
+          value:
+            amount: 1
+            currency: EUR
+            returnUrl: https://soundflare.com/order/20039471/complete
+            webhookUrl: https://api.soundflare.com/order/20039471/complete
+            shopId: d0c3ccd9-162c-497e-808b-e769aea89c58
+            description: Membership on SoundFlare
+            paymentId: '20039471'
+            customerId: 2145-a1223
+      properties:
+        amount:
+          format: decimal
+          type: number
+          description: Payment amount in decimal format (e.g. 999.99).
+        currency:
+          type: string
+          description: 'Payment currency. Currently accepted: {EUR, GBP, BGN, BRL,
+            CAD, DKK, HUF, NOK, RON, SEK}.'
+        returnUrl:
+          type: string
+          description: The URL the customer is redirected to once the payment is completed.
+        paymentId:
+          type: string
+          description: Order identifier in your records.
+        webhookUrl:
+          type: string
+          description: Notification URL to which Rocka sends webhooks whenever the
+            payment's status changes.
+        shopId:
+          type: string
+          description: Your website's identifier in Rocka's records. This parameter
+            is useful if you have more than one website.
+        description:
+          type: string
+          description: Short payment description for the customer.
+        customerId:
+          type: string
+          description: Customer's unique identifier in your records.
+        email:
+          type: string
+          description: Customer's email address.
+        providerId:
+          type: string
+          description: If used, the payment will be initiated directly with the defined
+            provider. Recommended to use in pair with /providers/top method.
+        ipAddress:
+          type: string
+          description: Customer's IP Address.
+        iban:
+          type: string
+          description: Customer's IBAN.
+      required:
+      - amount
+      - currency
+      - description
+      - returnUrl
+      - paymentId
+    LogoData:
+      type: object
+      title: Response_Logo
+      description: Information for the button appearance configuration. Contains SVG
+        logo url, type {country, bank}, id and display name.
+      x-examples:
+        'Example: GB':
+          value:
+            url: https://noda.blob.core.windows.net/logo-button/gb.svg
+            type: country
+            id: gb
+            displayName: UNITED KINGDOM
+        'Example: Lloyds Bank':
+          value:
+            country: GB
+            type: bank
+            id: ob-lloyds
+            displayName: Lloyds
+            url: https://noda.blob.core.windows.net/logo-button/ob-lloyds.svg
+      properties:
+        url:
+          type: string
+          description: URL to the SVG logo that will be part of the button.
+        type:
+          "$ref": "#/components/schemas/LogoType"
+          description: Button type (`bank` or `country`).
+        id:
+          type: string
+          description: Payment option choice. For example, country code or bank ID.
+        displayName:
+          type: string
+          description: Alternative display name for the payment option. For example,
+            United Kingdom or Lloyds Bank.
+        country:
+          type: string
+          description: Country's ISO 3166 code (only for `bank` buttons).
+      required:
+      - type
+    Response:
+      type: object
+      description: Response for the particular payment status
+      title: Response for payment status
+      properties:
+        amount:
+          format: decimal
+          type: number
+          description: Payment amount
+        currency:
+          type: string
+          description: Payment currency
+        id:
+          type: string
+          description: Payment ID in Rocka's systems.
+        status:
+          "$ref": "#/components/schemas/PaymentStatus"
+          description: Payment status.
+        description:
+          type: string
+          description: Short payment description for the customer.
+      required:
+      - amount
+      - currency
+      - id
+      - status
+    LogoType:
+      description: ''
+      enum:
+      - bank
+      - country
+      type: string
+      x-enumNames:
+      - Bank
+      - Country
+      x-examples:
+        example-1:
+          value: bank
+    PaymentStatus:
+      description: ''
+      enum:
+      - New
+      - Processing
+      - Failed
+      - Awaiting confirmation
+      - Done
+      type: string
+      x-enumNames:
+      - New
+      - Processing
+      - Failed
+      - AwaitingConfirmation
+      - Done
+      x-examples: {}
+    ProviderInfo:
+      type: object
+      x-examples:
+        example-1:
+          value:
+            country: string
+            id: string
+            isLoadAccounts: true
+            name: string
+      title: ProviderInfo
+      description: Providers information
+      x-stoplight:
+        id: 6afa79badc1b3
+      properties:
+        id:
+          type: string
+          description: The bank's unique ID in Rocka's records.
+        isInstant:
+          type: boolean
+          description: Indicates whether this bank supports instant payments.
+        name:
+          type: string
+          description: The bank's name that is displayed to the customer.
+        logoUrl:
+          type: string
+          description: Link to the bank's logo.
+        iin:
+          type: integer
+          description: The bank's IIN.
+      required:
+      - id
+      - isInstant
+      - name
+      - logoUrl
+    Request3:
+      properties:
+        amount:
+          format: decimal
+          type: number
+        currency:
+          type: string
+        customerId:
+          type: string
+        description:
+          type: string
+        email:
+          type: string
+        iin:
+          format: int64
+          type: integer
+        paymentId:
+          type: string
+        returnUrl:
+          type: string
+        userAgent:
+          type: string
+        webhookUrl:
+          type: string
+      required:
+      - amount
+      - iin
+      type: object
+      x-internal: false
+    Response3:
+      properties:
+        id:
+          type: string
+          description: The payment's ID.
+        url:
+          type: string
+          description: The link to the payment.
+      type: object
+      x-internal: false
+    Response4:
+      properties:
+        acsUrl:
+          type: string
+        id:
+          type: string
+        paReq:
+          type: string
+        url:
+          type: string
+      type: object
+      x-internal: false
   securitySchemes:
-    APIToken:
-      type: apiKey
-      name: x-api-key
-      description: "To run requests, you need an API key. To get your own sandbox and production API keys, complete your onboarding."
+    APItoken:
+      description: To get your own API keys, complete your onboarding on https://hub.rocka.live.
       in: header
+      name: x-api-key
+      type: apiKey
       x-default: 24d0034-5a83-47d5-afa0-cca47298c516
-security:
-- APIToken: []
-servers:
-- url: https://api.stage.rocka.live
-  description: SANDBOX
