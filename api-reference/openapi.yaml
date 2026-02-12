@@ -107,7 +107,7 @@ components:
       x-examples:
         'Example: GB':
           value:
-            url: https://noda.blob.core.windows.net/logo-button/gb.svg
+            url: https://rocka.blob.core.windows.net/logo-button/gb.svg
             type: country
             id: gb
             displayName: UNITED KINGDOM
@@ -117,7 +117,7 @@ components:
             type: bank
             id: ob-lloyds
             displayName: Lloyds
-            url: https://noda.blob.core.windows.net/logo-button/ob-lloyds.svg
+            url: https://rocka.blob.core.windows.net/logo-button/ob-lloyds.svg
       properties:
         url:
           type: string
@@ -284,7 +284,7 @@ components:
       type: apiKey
       x-default: 24d0034-5a83-47d5-afa0-cca47298c516
 info:
-  title: Noda Payments v2.0
+  title: Rocka Payments v2.0
   version: 1.0.0
   description: ''
   contact:
