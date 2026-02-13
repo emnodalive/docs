@@ -602,6 +602,105 @@ paths:
       x-codegen-request-body-name: request
       description: ''
       summary: Create a payout
+    get:
+      tags:
+      - Payouts
+      summary: Export payouts
+      parameters:
+      - name: dateFrom
+        in: query
+        schema:
+          type: string
+          format: date-time
+          description: Only include payouts that were made after a certain date. YYYY-MM-DD.
+        x-position: 1
+      - name: dateTo
+        in: query
+        schema:
+          type: string
+          format: date-time
+          description: Only include payouts that were made before a certain date.
+            YYYY-MM-DD.
+        x-position: 2
+      - name: status
+        in: query
+        schema:
+          type: string
+          description: Payout status.
+          enum:
+          - Processing
+          - Executing
+          - Failed
+          - Done
+          - Rejected
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: Payout ID.
+                    amount:
+                      type: number
+                      format: double
+                      description: The total amount that was transferred, in decimal format.
+                    currency:
+                      type: string
+                      description: Payout currency.
+                    status:
+                      type: string
+                      description: Payout status.
+                    fee:
+                      type: number
+                      format: double
+                      description: Total fees.
+                    balanceAfterOperation:
+                      type: number
+                      format: double
+                      nullable: true
+                      description: Total balance remaining after this payout was completed.
+                    balanceImpact:
+                      type: number
+                      format: double
+                      description: The net change to the balance.
+                    operationType:
+                      type: string
+                      description: Transaction type.
+                    createdAt:
+                      type: string
+                      format: date-time
+                      description: The date and time the payout transaction was created.
+                    executedAt:
+                      type: string
+                      format: date-time
+                      description: The date and time the payout transaction was completed.
+                    receivedAt:
+                      type: string
+                      format: date-time
+                      description: The date and time the recipient received the payout.
+                    rejectReason:
+                      type: string
+                      description: The reason why the payout failed.
+                  required:
+                  - id
+                  - amount
+                  - currency
+                  - fee
+                  - balanceAfterOperation
+                  - balanceImpact
+                  - operationType
+                  - createdAt
+                  - executedAt
+                  - receivedAt
+                  - rejectReason
+      security:
+      - ApiKey: []
 
   "/api/payouts/{id}":
     get:
