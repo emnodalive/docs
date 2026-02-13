@@ -274,7 +274,7 @@ To create a test checkout form payment, run this request with `"cardFormType": "
   The customer's phone number.
 </ParamField>
 
-<ParamField name="billingAddress" type="object">
+<ParamField body="billingAddress" type="object">
   <Expandable title="properties">
 
     <ParamField body="phoneNumber" type="string" required>
@@ -288,36 +288,58 @@ To create a test checkout form payment, run this request with `"cardFormType": "
     <ParamField name="city" type="string">
       City, town, district or village.
     </ParamField>
+
+    <ParamField name="state" type="string">
+      Province or region.
+    </ParamField>
+
+    <ParamField name="country" type="string">
+      Billing address country.
+    </ParamField>
+
+    <ParamField name="zip" type="string">
+      ZIP or postal code.
+    </ParamField>
     
   </Expandable>
 </ParamField>
 
-<ParamField name="user" type="User Object">
+<ParamField body="card" type="object" required>
   <Expandable title="properties">
-    <ResponseField name="full_name" type="string">
-      The full name of the user
-    </ResponseField>
 
-    <ResponseField name="is_over_21" type="boolean">
-      Whether the user is over 21 years old
-    </ResponseField>
+    <ParamField body="cardHolder" type="string">
+      Cardholder name.
+    </ParamField>
+
+    <ParamField name="cardNumber" type="string">
+      Card number.
+    </ParamField>
+
+    <ParamField name="cvv" type="string">
+      CVV code.
+    </ParamField>
+
+    <ParamField name="expiration" type="string">
+      The card's expiration date. Four digits, two for the month and two for the year. For example, 0132 for January 2032.
+    </ParamField>
+
+    <ParamField name="cardId" type="string">
+      The ID of a saved card, if applicable.
+    </ParamField>
+    
   </Expandable>
+</ParamField>
+
+<ParamField body="webhookUrl" type="string" required>
+  The URL that'll be used to fetch payment status updates.
 </ParamField>
 
 ## Response parameters
 
-<ResponseField name="response" type="string" required>
-  A response field example
+<ResponseField name="id" type="string">
+  Payment ID.
 </ResponseField>
 
-<ResponseField name="user" type="User Object">
-  <Expandable title="properties">
-    <ResponseField name="full_name" type="string">
-      The full name of the user
-    </ResponseField>
-
-    <ResponseField name="is_over_21" type="boolean">
-      Whether the user is over 21 years old
-    </ResponseField>
-  </Expandable>
+<ResponseField name="status" type="string">
+  Payment status.
 </ResponseField>
