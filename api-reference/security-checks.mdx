@@ -1,0 +1,28 @@
+---
+title: 'Security checks'
+---
+
+If you're using `returnUrl` and/or `webhookUrl` to handle payment or payout results, add quick security checks to prevent bank fraud.
+
+## Anti-fraud security checks
+
+1. **Verify the payment signature:**
+
+Use this formula to verify the payment signature:
+
+```text
+signature = sha256(paymentId + status + signatureKey)
+```
+
+The `signatureKey`is unique to your account and ensures the payment result data is authentic.
+
+<Tip>
+ You can find your sandbox and production `signatureKey` under the Integration tab in your Hub.
+ </Tip>
+
+2. **Prevent duplicate signatures:**
+
+This makes sure the payment result isn't duplicated. Fraudsters can't create a valid signature without your `signatureKey`, but they can intercept a legitimate result and try to resend it. To prevent this, implement duplicate detection:
+
+* Compare the `paymentId` of the current order with the one in the payment result.
+* Store every `paymentId` that has been processed and reject any repeated submissions with the same ID.

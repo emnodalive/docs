@@ -1,0 +1,25 @@
+---
+title: 'About payment statuses'
+---
+
+Every payment goes through three temporary statuses (`New`, `Processing` and `Awaiting Confirmation`) before arriving at a final status, either `Done` or `Failed`.
+
+To check the status of a payment, you can:
+
+1. Look the payment up in your [Rocka Hub](https://hub.rocka.live/)
+2. Use the [Check payment status](https://docs.noda.live/reference/check-payment-status#/) API endpoint
+3. Retrieve it through a webhook.
+
+## Payment statuses
+
+| Status                | Description                                                                        |
+| :-------------------- | :--------------------------------------------------------------------------------- |
+| New                   | The payment has been created.                                                      |
+| Processing            | The payment is being processed.                                                    |
+| Awaiting confirmation | We're waiting for the bank to confirm the payment has been successfully completed. |
+| Done                  | The payment has completed successfully.                                            |
+| Failed                | The payment has failed and cannot be completed.                                    |
+
+<Tip>
+You can filter payments by status when exporting data through Rocka API. For more details, see [Export payments](https://docs.noda.live/reference/export-payments#/).
+</Tip>

@@ -1,0 +1,30 @@
+---
+title: "API keys"
+---
+
+To make every API call, you'll need your key. Always include it in the request header under `x-api-key`.
+
+<Tip>
+  You can find your sandbox and production API keys under the **Integration** tab in your Hub.
+</Tip>
+
+**Request example:**
+
+```
+curl --request POST \
+  --url https://api.stage.rocka.live/api/payments/logo \
+  --header 'Accept: application/json, text/json, text/plain' \
+  --header 'Content-Type: application/*+json' \
+  --header 'x-api-key: your-api-key-goes-here' \
+  --data '{
+  "currency": "EUR"
+}'
+```
+
+---
+
+### Sandbox keys
+
+- `x-api-key:` 24d0034-5a83-47d5-afa0-cca47298c516
+- `signature key:` 028b9b98-f250-492c-a63a-dfd7c112cc0a
+- `shopId:` d0c3ccd9-162c-497e-808b-e769aea89c58

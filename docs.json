@@ -29,7 +29,6 @@
           {
             "group": "Open banking",
             "pages": [
-              "open-banking/start-accepting-payments",
               "open-banking/about-payment-statuses",
               "open-banking/display-customised-payment-buttons",
               "open-banking/buffet",
