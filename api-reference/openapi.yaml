@@ -774,6 +774,69 @@ paths:
       description: ''
       summary: Check payout status
 
+  "/balances/api/balance":
+    get:
+      tags:
+      - Manage your data
+      summary: Check your balance
+      parameters:
+      - in: query
+        name: currency
+        description: The ISO code of the currency you want to check your balance for.
+          For example, EUR or GBP.
+        required: true
+        schema:
+          type: string
+          example: EUR
+      - in: query
+        name: type
+        schema:
+          type: string
+          enum:
+          - payin
+          - payout
+          example: payin
+        description: To check your payment balance, select payin. To check your payout
+          balance, select payout.
+        required: true
+      - in: query
+        schema:
+          type: string
+          format: date-time
+          example: '2025-06-18'
+        name: date
+        description: Balance timestamp in the YYYY-MM-DD format. For example, 2025-06-18
+          for June 18th, 2025.
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  amount:
+                    type: integer
+                    description: The amount on your balance.
+                  currency:
+                    type: string
+                    description: Balance currency.
+                  type:
+                    type: string
+                    description: Balance type.
+                  date:
+                    type: string
+                    format: date-time
+                    description: Balance timestamp.
+              example:
+                amount: 53.93
+                currency: EUR
+                type: payin
+                date: '2025-06-18'
+        '404':
+          description: This response means you do not have any of that currency on
+            your balance.
 
 
 security:
