@@ -70,7 +70,8 @@
           "pages": [
             "api-reference/getting-started",
             "api-reference/api-keys",
-            "api-reference/security-checks"
+            "api-reference/security-checks",
+            "api-reference/card-payments"
           ]
         }
       ]
