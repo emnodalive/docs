@@ -1,0 +1,81 @@
+---
+title: "Create instant payment links"
+---
+
+**Rocka Instant Payment Links** are one-time payment links you can share with your customers. You can create payment links in your Rocka Hub or using our API endpoint.
+
+### What to expect
+
+* You can present payment links as either plain text links or QR codes.
+* By default, payment links expire in 30 days. You can set a custom expiration date if you are using the API to create the payment link.
+
+## Create a payment link using the API
+
+### Step 1. Generate a link
+
+To create a payment link, use the `POST /payments/short-links` endpoint ([Create payment links](https://docs.rocka.live/reference/create-payment-links#/)).
+
+You request needs to include the `name`, `paymentDescription`, `amount` and `currency` parameters. The payment link name is only visible to you, but your customer will see the description on the payment form.
+
+In the response, you will receive the payment short link and the link to the QR code.
+
+<Accordion title="Sample request" icon="fa-code">
+  ```curl
+    		curl --request POST \
+     --url https://api.rocka.live/api/payments/short-links \
+     --header 'accept: application/json' \
+     --header 'content-type: application/json' \
+     --header 'x-api-key: your-key-goes-here' \
+     --data '{
+  "name": "Payment link",
+  "paymentDescription": "You can complete your order here.",
+  "currency": "EUR",
+  "amount": 87
+    	}'
+  ```
+</Accordion>
+
+<Accordion title="Sample response" icon="fa-code">
+  ```json
+  {
+  "id": "JnoSTolSKN",
+  "name": "Payment link",
+  "paymentDescription": "You can complete your order here.",
+  "amount": 87,
+  "currency": "EUR",
+  "isActive": true,
+  "createdDate": "2025-09-18T16:21:31.4234278Z",
+  "shortLinkUrls": {
+    "shortLink": "https://nd.link/JnoSTolSKN",
+    "qrCodeLink": "https://nd.link/JnoSTolSKN?qr"
+  },
+  "expiryDate": "2025-10-18T16:21:32.7225761Z"
+  }
+  ```
+</Accordion>
+
+### Step 2. Process the payment
+
+When you are creating the payment link, you can specify the `returnUrl` the customer will be redirected to once the payment is completed or the `webhookUrl` for payment status updates:
+
+```curl
+{
+  "webhookUrl": "https://myshop.com/hookurl",
+  "returnUrl": "https://myshop.com/returnurl"
+}
+```
+
+For more details, see [Retrieve a payment](https://docs.rocka.live/reference/retrieve-a-payment-2#/).
+
+## Create a payment link in your Rocka Hub
+
+1. In your <Anchor label="Rocka Hub" target="_blank" href="https://hub.rocka.live">Rocka Hub</Anchor>, click <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="20" height="20" viewBox="0 0 32 32">
+   <path d="M15.369 5.2c2.909-2.916 7.604-3.443 10.847-0.907 3.884 3.037 4.139 8.697 0.764 12.080l-1.897 1.9c-0.524 0.525-1.372 0.525-1.896 0-0.524-0.524-0.524-1.376 0-1.9l1.896-1.901c2.207-2.209 2.087-5.883-0.363-7.933-2.169-1.817-5.425-1.471-7.424 0.532l-1.697 1.7c-0.523 0.525-1.373 0.525-1.896 0-0.524-0.524-0.529-1.371 0.236-2.137l1.431-1.433zM17.724 12.391l-5.333 5.333c-0.521 0.521-0.521 1.364 0 1.885 0.26 0.26 0.601 0.391 0.943 0.391s0.683-0.131 0.943-0.391l5.333-5.333c0.521-0.521 0.521-1.364 0-1.885s-1.364-0.521-1.885 0zM16.374 23.195l-1.699 1.695c-2.001 1.996-5.264 2.34-7.435 0.531-2.452-2.043-2.573-5.704-0.364-7.908l1.9-1.893c0.524-0.523 0.524-1.371 0-1.895-0.524-0.521-1.375-0.521-1.9 0l-1.7 1.697c-2.896 2.888-3.404 7.533-0.9 10.765 3.028 3.911 8.708 4.175 12.097 0.796l1.9-1.893c0.524-0.524 0.524-1.371 0-1.895-0.525-0.524-1.375-0.524-1.9 0z"><script xmlns="" /></path></svg> **Payment Links** on the navigation sidebar.
+2. Click the <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="20" height="20" viewBox="0 0 32 32">
+   <path d="M25.333 14.667h-8v-8c0-0.737-0.597-1.333-1.333-1.333s-1.333 0.596-1.333 1.333v8h-8c-0.736 0-1.333 0.596-1.333 1.333s0.597 1.333 1.333 1.333h8v8c0 0.737 0.597 1.333 1.333 1.333s1.333-0.596 1.333-1.333v-8h8c0.736 0 1.333-0.596 1.333-1.333s-0.597-1.333-1.333-1.333z"><script xmlns="" /></path></svg> **Create link & QR Code** button in the top-right corner.
+3. Add a name for your payment link, choose a currency, enter the payment amount and add a description. The name will only be visible to you, but your customer will see the description on the payment form.
+
+   <Image align="left" width="300px" src="https://files.readme.io/da91e1552cc1a3454119dc035069979b836f82f187c3d2a9609629e9adb8814e-image.png" />
+4. Click **Generate**.
+
+<br />

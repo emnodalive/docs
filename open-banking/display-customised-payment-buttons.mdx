@@ -1,0 +1,218 @@
+---
+title: 'Display customised payment buttons'
+---
+
+You can change the appearance of your payment buttons and tailor them to your customer's country or preferred bank.
+
+### Regional buttons
+
+This endpoint displays a button based on the customer's currency. It requires the customer's `currency` code, such as `EUR` for the euro or `GBP` for the British pound.
+
+<Accordion title="Sample request and response (EUR)" icon="fa-code">
+  **Request**
+
+  ```curl
+   curl --request POST \
+  --url https://api.stage.rocka.live/api/payments/logo \
+  --header 'Accept: application/json, text/json, text/plain' \
+  --header 'Content-Type: application/*+json' \
+  --header 'x-api-key: 24d0034-5a83-47d5-afa0-cca47298c516' \
+  --data '{
+    "currency": "EUR"
+  }'
+  ```
+
+  **Response**
+
+  ```json
+   {
+    "type": "country",
+    "id": "eu",
+    "displayName": "EUROPEAN UNION",
+    "url": "https://rockastore.azureedge.net/logo-button/eu.svg"
+  }
+  ```
+
+  **Result**
+
+  ![EU payment button logo](https://nodastore.azureedge.net/logo-button/eu.svg)
+
+  *EU payment button*
+</Accordion>
+
+### Country buttons
+
+You need to include two parameters in your request, `currency` and `country`. This returns the button tailored to the customer's country.
+
+<Accordion title="Sample request and response (Germany)" icon="fa-code">
+  **Request**
+
+  ```curl
+   curl --request POST \
+  --url https://api.stage.rocka.live/api/payments/logo \
+  --header 'Accept: application/json, text/json, text/plain' \
+  --header 'Content-Type: application/*+json' \
+  --header 'x-api-key: 24d0034-5a83-47d5-afa0-cca47298c516' \
+  --data '{
+  "currency": "EUR",
+  "country": "DE"
+  }'
+  ```
+
+  **Response**
+
+  ```json
+   {
+      "type": "country",
+      "id": "de",
+      "displayName": "Germany",
+      "url": "https://rockastore.azureedge.net/logo-button/de.svg"
+  }
+  ```
+
+  **Result**
+
+  ![Germany payment button](https://nodastore.azureedge.net/logo-button/de.svg)
+
+  *Germany payment button*
+</Accordion>
+
+<Accordion title="Sample request and response (The Netherlands)" icon="fa-code">
+  **Request**
+
+  ```curl
+  curl --request POST \
+  --url https://api.stage.rocka.live/api/payments/logo \
+  --header 'Accept: application/json, text/json, text/plain' \
+  --header 'Content-Type: application/*+json' \
+  --header 'x-api-key: 24d0034-5a83-47d5-afa0-cca47298c516' \
+  --data '{
+  "currency": "EUR",
+  "country": "NL"
+  }'
+  ```
+
+  **Response**
+
+  ```json
+   {
+  "type": "country",
+  "id": "nl",
+  "displayName": "Netherlands",
+  "url": "https://rockastore.azureedge.net/logo-button/nl.svg"
+  }
+  ```
+
+  **Result**
+
+  ![The Netherlands payment button](https://nodastore.azureedge.net/logo-button/nl.svg)
+
+  *The Netherlands payment button*
+</Accordion>
+
+### Bank buttons
+
+You need to pass the `currency` and either of the customer's `email` address or`customerId`(or both). This checks the customer's past transaction history and displays a payment button with their bank's logo.
+
+<Accordion title="Sample request and response (with customerId)" icon="fa-code">
+  **Request**
+
+  ```curl
+   curl --request POST \
+  --url https://api.stage.rocka.live/api/payments/logo \
+  --header 'Accept: application/json, text/json, text/plain' \
+  --header 'Content-Type: application/*+json' \
+  --header 'x-api-key: 24d0034-5a83-47d5-afa0-cca47298c516' \
+  --data '{
+  "currency": "EUR",
+  "customerId": "test_customer_id"
+  }'
+  ```
+
+  **Response**
+
+  ```json
+   {
+  "country": "nl",
+  "type": "bank",
+  "id": "abn_amro_group_nl",
+  "displayName": "ABN AMRO",
+  "url": "https://rockastore.azureedge.net/logo-button/abn_amro_group_nl.svg"
+  }
+  ```
+
+  **Result**
+
+  ![ABN Amro payment button](https://nodastore.azureedge.net/logo-button/abn_amro_group_nl.svg)
+
+  *ABN Amro payment button*
+</Accordion>
+
+<Accordion title="Sample request and response (with email)" icon="fa-code">
+  **Request**
+
+  ```curl
+   curl --request POST \
+  --url https://api.stage.rocka.live/api/payments/logo \
+  --header 'Accept: application/json, text/json, text/plain' \
+  --header 'Content-Type: application/*+json' \
+  --header 'x-api-key: 24d0034-5a83-47d5-afa0-cca47298c516' \
+  --data '{
+  "currency": "EUR",
+  "email": "test@example.com"
+  }'
+  ```
+
+  **Response**
+
+  ```json
+   {
+  "country": "nl",
+  "type": "bank",
+  "id": "ing_nl",
+  "displayName": "ING",
+  "url": "https://rockastore.azureedge.net/logo-button/ing_nl.svg"
+  }
+  ```
+
+  **Result**
+
+  ![ING payment button](https://nodastore.azureedge.net/logo-button/ing_nl.svg)
+
+  *ING payment button*
+</Accordion>
+
+<Accordion title="Sample request and response (with customerId) and email" icon="fa-code">
+  **Request**
+
+  ```curl
+  curl --request POST \
+  --url https://api.stage.rocka.live/api/payments/logo \
+  --header 'Accept: application/json, text/json, text/plain' \
+  --header 'Content-Type: application/*+json' \
+  --header 'x-api-key: 24d0034-5a83-47d5-afa0-cca47298c516' \
+  --data '{
+  "currency": "EUR",
+  "email": "test@example.com",
+  "customerId": "test_customer_id"
+  }'
+  ```
+
+  **Response**
+
+  ```json
+   {
+  "country": "nl",
+  "type": "bank",
+  "id": "ing_nl",
+  "displayName": "ING",
+  "url": "https://rockastore.azureedge.net/logo-button/ing_nl.svg"
+  }
+  ```
+
+  **Result**
+
+  ![ING payment button](https://nodastore.azureedge.net/logo-button/ing_nl.svg)
+
+  *ING payment button*
+</Accordion>
