@@ -270,8 +270,20 @@ To create a test checkout form payment, run this request with `"cardFormType": "
   Order identifier in your records.
 </ParamField>
 
-<ParamField body="returnUrl" type="string" required>
-  The URL the customer is redirected to once the payment is completed.
+<ParamField body="phoneNumber" type="string" required>
+  The customer's phone number.
+</ParamField>
+
+<ParamField name="billingAddress" type="User Object">
+  <Expandable title="properties">
+    <ParamField name="addressLine" type="string">
+      Street address.
+    </ParamField>
+
+    <ParamField name="city" type="string">
+      City, town, district or village.
+    </ParamField>
+  </Expandable>
 </ParamField>
 
 ## Response parameters
