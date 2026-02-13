@@ -3,6 +3,255 @@ title: "Card payments"
 api: 'POST /api/payments'
 ---
 
+Use this endpoint to create card payments. Using the payment details from your POST request, it generates a URL that you can use to direct the customer to authorise the payment.
+
+## Non-3DS
+
+To create a test non-3DS payment, run this request with `"cvv": "111"` in the body.
+
+<Accordion title="Sample request and response (Non-3DS)" icon="fa-code">
+  ### Sample request
+
+  ```Text cURL
+   {
+                "amount": 1,
+                "currency": "EUR",
+                "customerId": "GR-1245678",
+                "phoneNumber": "321569568504",
+                "billingAddress": {
+                  "addressLine": "16 Blaby Rd",
+                  "city": "Wigston",
+                  "state": "Leicestershire" ,
+                  "country": "AT",
+                  "zip": "LE18 4SB"
+                },
+                "card": {
+                  "cardNumber": "4253258107133225",
+                  "expiration": "1222",
+                  "cvv": "111",
+                  "cardHolder": "Test test",
+                  "cardId": null
+                },
+                "type": "regular",
+                "description": "Order 1412-DS-22",
+                "paymentId": "119318-123dsa-1423",
+                "returnUrl": "https://myshop.com/returnurl",
+                "webhookUrl": "https://myshop.com/hookurl"
+              }
+  ```
+
+  ### Sample response
+
+  ```
+          {
+              "id": "c4e4d195-98a2-4a7b-8708-4a555a4131f",
+              "status": "Done"
+              "url": "",
+              "qrCode": "",
+              "threeDsData": null
+          }
+  ```
+</Accordion>
+
+## Non-3DS with cardId
+
+For repeated purchases, you can use the `cardId` you got in the webhook from the initial payment. For more details on payment webhooks, see [Retrieve a payment](ref:retrieve-a-payment-1).
+
+<Accordion title="Sample request and response (Non-3DS with cardId)" icon="fa-code">
+  ### Sample request
+
+  ```
+  {
+              "amount": 1,
+              "currency": "EUR",
+              "customerId": "GR-124567",
+              "phoneNumber": "321569568504",
+              "billingAddress": {
+                "addressLine": "16 Blaby Rd",
+                "city": "Wigston",
+                "state": "Leicestershire" ,
+                "country": "AT",
+                "zip": "LE18 4SB"
+              },
+              "card": {
+                "cardId": "87a7b4d120a0c1f18ebca1adf875d96499acbf9b959f27ddee1088442cef8abf"
+              },
+              "type": "regular",
+              "description": "Order 1412-DS-22",
+              "paymentId": "12218-123dsa-4133",
+              "returnUrl": "https://myshop.com/returnurl",
+              "webhookUrl": "https://myshop.com/hookurl"
+            }
+  ```
+
+  ### Sample response
+
+  ```
+  {
+                  "id": "0ce31d6b-ed2b-4940-9a42-e00a9450db2d",
+                  "status": "Done"
+                  "url": "",
+                  "qrCode": "",
+                  "threeDsData": null
+              }
+  ```
+</Accordion>
+
+## 3DS
+
+To create a test 3DS payment, run this request with `"CVV": "123"` in the body.
+
+If the `threeDsData` parameter isn't empty and the payment's status is _Awaiting confirmation_, your app will need to redirect the user to the ACS URL or open it in an iFrame. This will redirect the user to their bank's identity verification page that will prompt them to confirm the payment.
+
+<Accordion title="Sample request and response (3DS)" icon="fa-code">
+  ### Sample request
+
+  ```
+  {
+                  "amount": 1,
+                  "currency": "EUR",
+                  "customerId": "GR-1245678123",
+                  "phoneNumber": "321569568504",
+                  "billingAddress": {
+                    "addressLine": "16 Blaby Rd",
+                    "city": "Wigston",
+                    "state": "Leicestershire" ,
+                    "country": "AT",
+                    "zip": "LE18 4SB"
+                  },
+                  "card": {
+                    "cardNumber": "4253258107133225",
+                    "expiration": "1222",
+                    "cvv": "123",
+                    "cardHolder": "Test test"
+                  },
+                  "type": "regular",
+                  "description": "Order 1412-DS-22",
+                  "paymentId": "119318-123dsa-1423",
+                  "returnUrl": "https://myshop.com/returnurl",
+                  "webhookUrl": "https://myshop.com/hookurl"
+              }
+  ```
+
+  ### Sample response
+
+  ```
+          {
+              "id": "121e753f-ecda-43bf-9b3f-fb3d0c770953",
+              "status": "Awaiting confirmation",
+              "url": "",
+              "qrCode": "",        
+              "threeDsData": {
+                "paReq": "Y",
+                "acsUrl": "https://redirector.dev.moto-sandbox.org/threeds",
+                "termUrl": "https://processing.dev.moto-sandbox.org/api/merchants/1105654b6f8a4a6983d12469e9a8d697/payments/threeDSecure/complete?data=fSUNBHWlby-4GJrO_1_7mby5cKeCmXcTJ8e3dOrEy5C4Mb6jmCK8gr6UMucRXyqDFl1OcsN_u4poIL_ZzFRAIIzUAe2I7ScmALMo6BcOHr8tFiz8rdgKBZka1wlNDfSNloIzAF3t9B8RBdcnnHsDJg8RByrPKs_JDWQb-oU0yvIJkKodekOvK2MPt-5DegQ3SzO-VgF-XUyBaCWxXFzO4g",
+                "md": "Y"
+              }             
+          }
+  ```
+</Accordion>
+
+If you received the _Awaiting confirmation_ status and `threeDsData` is not empty, your app or website will need to open the ACS URL in an `iframe` tag or redirect the customer to this URL.
+
+## 3DS V2 with redirect
+
+To create a test 3DS V2 payment, run this request with `"CVV": "123"` and `"CardNumber": 4129125484766038` in the body.
+
+If the `threeDsData` parameter isn't empty and the payment's status is _Awaiting confirmation_, your app will need to redirect the user to URL in the `location` parameter in the response.
+
+<Accordion title="Sample request and response (Non-3DS)" icon="fa-code">
+  ### Sample request
+
+  ```
+  {
+                  "amount": 1,
+                  "currency": "EUR",
+                  "customerId": "GR-1245678123",
+                  "phoneNumber": "321569568504",
+                  "billingAddress": {
+                    "addressLine": "16 Blaby Rd",
+                    "city": "Wigston",
+                    "state": "Leicestershire" ,
+                    "country": "AT",
+                    "zip": "LE18 4SB"
+                  },
+                  "card": {
+                    "cardNumber": "4129125484766038",
+                    "expiration": "1222",
+                    "cvv": "123",
+                    "cardHolder": "Test test"
+                  },
+                  "type": "regular",
+                  "description": "Order 1412-DS-22",
+                  "paymentId": "119318-123dsa-1423",
+                  "returnUrl": "https://myshop.com/returnurl",
+                  "webhookUrl": "https://myshop.com/hookurl"
+              }
+  ```
+
+  ### Sample response
+
+  ```
+   {
+                  "id": "121e753f-ecda-43bf-9b3f-fb3d0c770953",
+                  "status": "Awaiting confirmation",
+                  "url": "",
+                  "qrCode": "",        
+                  "threeDsData": {
+                    "paReq": null,
+                    "acsUrl": null,
+                    "termUrl": null,
+                    "md": null,
+                    "location":"https://stage.checkout.rocka.live/?id=a7672bc0-88fe-4fea-b6b1-e2578798a3b0&token=v4.local.Z_w8kspoXA3a8Uyq15pkAGR-0o2Mo6LAQl4kh69RmdRcBpeZXCjdJ_vEuFXBLoV7iVqJLT48sT-Eg-WQELNPorsU3BAuodEpy-KYc3E1SCQNfeSAlzCOawikoWYLE1MuwMvlYo_Lz3DuJBZX3f0x6HsyNjaPP3GfFuXCUSExbwoL5mLlrV0rX4LJYRP8My5Sy6kqfuQwJJKaM7j16MCPogCvSFZlizxVWjeAXSpBysROxfBTXNhFISl4oP31wZoOcZAgUDfL0nV2e2nhx0FOkAAa1InJOi809sdPDkKlaFcVR3z4zmwUvQ25mZh6rNiLE5sbs75xh_tTpjn7ioXXldzn&providerId=ing_diba_de&returnUrl=https%3a%2f%2fprocessing.dev.moto-sandbox.org%2fapi%2fmerchants%2fd0c3ccd9162c497e808be769aea89c58%2fpayments%2fthreeDSecure%2fcomplete%3fdata%3dJ1IBAjyvStZl7NyrucIb15P8CTj2aDhHt8CGKfZTOh9mBP5lNzSpfBnFxqWAwSB7m20zTQ1AhQzR6y-V7s-B9-cUnsxUx0hpfMxizRcoXzRWcl8Ii1fgQUJyHNmMgH28B8qHjYGfKwo-RtOu1lU79w&country=DE"
+                  }             
+              }
+  ```
+</Accordion>
+
+## Checkout form
+
+To create a test checkout form payment, run this request with `"cardFormType": "checkout_form"`in the body. This endpoint returns the URL where the customer should be redirected (found in the `url` parameter in the response).
+
+<Accordion title="Sample request and response (Non-3DS)" icon="fa-code">
+  ### Sample request
+
+  ```
+  {
+                  "amount": 1,
+                  "currency": "EUR",
+                  "customerId": "GR-1245678123",
+                  "phoneNumber": "321569568504",
+                  "billingAddress": {
+                    "addressLine": "16 Blaby Rd",
+                    "city": "Wigston",
+                    "state": "Leicestershire" ,
+                    "country": "AT",
+                    "zip": "LE18 4SB"
+                  },
+                  "cardFormType": "checkout_form",
+                  "card": {
+                    "cvv": ""
+                  },
+                  "description": "Order 1412-DS-22",
+                  "paymentId": "119318-123dsa-1423",
+                  "returnUrl": "https://myshop.com/returnurl",
+                  "webhookUrl": "https://myshop.com/hookurl"
+              }
+  ```
+
+  ### Sample response
+
+  ```
+   {
+              "id": "17bb1c15-38f9-4660-839a-95a4c8c49d74",
+              "url": "https://stage.pay.rocka.live?id=17bb1c15-38f9-4660-839a-95a4c8c49d74&token=v4.local.bFGTMzek_eKkEDQqYVuPNd9bnIJNZycq5rAFa8OqXbWqZmG_X9EFYhVn3UFw_rB33NkiCt1YOe3sHN8EBeVjwthWpIaJ_ue-iSRXf650J1x0Ia6owLxKHuPzpiyAqqIJIIse5BRs3kNKMM_PWcIcWyEibxjAgyhIjwTwdPvW_juvSiIVcj8nF-aGhSOEd0yDGx6r1Otig4CB0DIhbExXvrwC2BlAIj108GgbN2kXVnGZzQ_LgOQGwHgQf1Q5AeRLxo8uIZ7cmDgHSYGNXovDuT8iVaFSqgNNGbsuKwQmwTEdrYRUGGekM-Yq3dmv2HT-kyWtl_U38E0bDnLYCkEIPjua",
+              "qrCode": "",
+              "threeDsData": null,
+              "status": "Processing"
+          }
+  ```
+</Accordion>
+
 ## Body parameters
 
 <ParamField body="amount" type="number" required>
