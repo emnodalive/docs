@@ -3,6 +3,30 @@ title: "Card payments"
 api: 'POST /api/payments'
 ---
 
-<ParamField path="userId" type="string" required>
-  Unique identifier for the user
+## Body parameters
+
+<ParamField body="amount" type="number" required>
+  Payment amount in decimal format (e.g. 999.99).
 </ParamField>
+
+<ParamField body="currency" type="string" required>
+  Currency code (ISO-4217). Supported currencies: EUR, GBP, CAD, AUD, NOK, SGD.
+</ParamField>
+
+<ParamField body="returnUrl" type="string" required>
+  The URL the customer is redirected to once the payment is completed.
+</ParamField>
+
+<ParamField body="paymentId" type="string" required>
+  Order identifier in your records.
+</ParamField>
+
+<ParamField body="returnUrl" type="string" required>
+  The URL the customer is redirected to once the payment is completed.
+</ParamField>
+
+## Response parameters
+
+<ResponseField name="response" type="string" required>
+  A response field example
+</ResponseField>
