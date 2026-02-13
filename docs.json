@@ -70,7 +70,20 @@
           "pages": [
             "api-reference/getting-started",
             "api-reference/api-keys",
-            "api-reference/security-checks",
+            "api-reference/security-checks"
+          ]
+        },
+        {
+      "group": "Payments_new",
+      "openapi": "api-reference/openapi.yaml",
+      "pages": [
+        "GET /api/payments",
+        "POST /api/payments"
+      ]
+        },
+        {
+          "group": "Card payments",
+          "pages": [
             "api-reference/card-payments"
           ]
         }
