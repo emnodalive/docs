@@ -274,8 +274,13 @@ To create a test checkout form payment, run this request with `"cardFormType": "
   The customer's phone number.
 </ParamField>
 
-<ParamField name="billingAddress" type="User Object">
+<ParamField name="billingAddress" type="object">
   <Expandable title="properties">
+
+    <ParamField body="phoneNumber" type="string" required>
+      The customer's phone number.
+    </ParamField>
+
     <ParamField name="addressLine" type="string">
       Street address.
     </ParamField>
@@ -283,6 +288,7 @@ To create a test checkout form payment, run this request with `"cardFormType": "
     <ParamField name="city" type="string">
       City, town, district or village.
     </ParamField>
+    
   </Expandable>
 </ParamField>
 
@@ -290,4 +296,16 @@ To create a test checkout form payment, run this request with `"cardFormType": "
 
 <ResponseField name="response" type="string" required>
   A response field example
+</ResponseField>
+
+<ResponseField name="user" type="User Object">
+  <Expandable title="properties">
+    <ResponseField name="full_name" type="string">
+      The full name of the user
+    </ResponseField>
+
+    <ResponseField name="is_over_21" type="boolean">
+      Whether the user is over 21 years old
+    </ResponseField>
+  </Expandable>
 </ResponseField>
