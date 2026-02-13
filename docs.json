@@ -73,7 +73,7 @@
           ]
         },
         {
-      "group": "Open banking payments",
+      "group": "Open banking",
       "openapi": "api-reference/openapi.yaml",
       "pages": [
         "POST /api/payments",
