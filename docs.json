@@ -76,8 +76,11 @@
       "group": "Payments_new",
       "openapi": "api-reference/openapi.yaml",
       "pages": [
-        "GET /api/payments",
-        "POST /api/payments"
+        "POST /api/payments",
+        "GET /api/payments/{id}",
+        "POST /api/payments/logo",
+        "POST /api/providers/top",
+        "POST /api/payments/short-links"
       ]
         },
         {
