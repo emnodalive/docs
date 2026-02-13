@@ -78,7 +78,8 @@
       "pages": [
         "POST /api/payments",
         "GET /api/payments/{id}",
-        "POST /api/payments/logo"
+        "POST /api/payments/logo",
+        "GET /api/providers/top"
       ]
         },
         {
