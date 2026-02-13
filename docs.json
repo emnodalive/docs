@@ -63,7 +63,6 @@
       },
       {
       "tab": "API Reference",
-      "openapi": "api-reference/openapi.yaml",
       "groups": [
         {
           "group": "Introduction",
