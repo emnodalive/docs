@@ -1,3 +1,4 @@
+
 info:
   title: Rocka Payments
   version: 1.0.0
@@ -349,7 +350,224 @@ paths:
       description: ''
     parameters: []
 
+  "/api/payouts":
+    post:
+      operationId: Payout_PayoutUrl
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              title: Payout request
+              x-examples:
+                EUR payout:
+                  amount: 100
+                  currency: EUR
+                  iban: DE75512108001245126199
+                  beneficiaryName: Mark Schmidt
+                  webhookUrl: https://stage.rocka.live/api/notification/apidocs?key=test-key-is-here
+                  requestId: test_EUR
+                GBP payout:
+                  amount: 100
+                  currency: GBP
+                  sortCode: 100000
+                  accountNumber: 31510604
+                  beneficiaryName: John Doe
+                  webhookUrl: https://stage.rocka.live/api/notification/apidocs?key=test-key-is-here
+                  requestId: test_GBP
+              description: Data needed to create a new payout
+              properties:
+                amount:
+                  format: decimal
+                  type: number
+                  description: The total amount to be transferred, in decimal format.
+                requestId:
+                  type: string
+                  description: The payout's unique identifier (to prevent duplicate requests).
+                currency:
+                  type: string
+                  description: 'Payment currency. Currently accepted: EUR, GBP.'
+                iban:
+                  type: string
+                  description: "(Only for EUR payouts) Recipient's IBAN (International Bank
+                    Account Number)."
+                accountNumber:
+                  type: number
+                  description: "(Only for GBP payouts) Recipient's account number (8 digits)."
+                sortCode:
+                  type: number
+                  description: "(Only for GBP payouts) Recipient bank's sort code (6 digits).
+                    Used to identify the beneficiary's bank and local branch."
+                beneficiaryName:
+                  type: string
+                  description: Recipient's full name.
+                webhookUrl:
+                  type: string
+                  description: The URL that'll be used to fetch payout status updates.
+              required:
+              - amount
+              - currency
+              - beneficiaryName
+              - requestId
 
+            examples:
+              EUR payout:
+                value:
+                  amount: 10
+                  currency: EUR
+                  iban: DE75512108001245126199
+                  beneficiaryName: Mark Schmidt
+                  webhookUrl: https://stage.rocka.live/api/notification/apidocs?key=test-key-is-here
+                  requestId: test_EUR
+              GBP payout:
+                value:
+                  amount: 10
+                  currency: GBP
+                  sortCode: 100000
+                  accountNumber: 31510604
+                  beneficiaryName: John Doe
+                  webhookUrl: https://stage.rocka.live/api/notification/apidocs?key=test-key-is-here
+                  requestId: test_GBP
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                title: Payout response
+                properties:
+                  id:
+                    type: string
+                    description: This payout's unique ID in Rocka's records.
+                  amount:
+                    format: decimal
+                    type: number
+                    description: Payout amount.
+                  currency:
+                    type: string
+                    description: Payout currency.
+                  requestId:
+                    type: string
+                    description: The payout's unique identifier (to prevent duplicate requests).
+                  createdAt:
+                    type: string
+                    description: Date and time when the payout was registered by Rocka.
+                  status:
+                      description: 'Payout status.'
+                      enum:
+                      - Processing
+                      - Executing
+                      - Failed
+                      - Done
+                      type: string
+                  iban:
+                    type: string
+                    description: Recipient's IBAN (International Bank Account Number).
+                  beneficiaryName:
+                    type: string
+                    description: Recipient's full name.
+                  beneficiaryRef:
+                    type: string
+                    description: Bank reference, which appears on the beneficiary's bank statement
+                      once the payout arrives.
+                required:
+                - id
+                - amount
+                - currency
+                - createdAt
+                - status
+                - iban
+                - beneficiaryName
+                - beneficiaryRef
+          description: ''
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorised
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      security:
+      - APItoken: []
+      tags:
+      - Payouts
+      x-codegen-request-body-name: request
+      description: ''
+      summary: Create a payout
+
+  "/api/payouts/{id}":
+    get:
+      operationId: Payouts_Get
+      parameters:
+      - in: path
+        name: id
+        required: true
+        description: Payout's unique ID.
+        schema:
+          nullable: false
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                title: Payout response
+                properties:
+                  id:
+                    type: string
+                    description: This payout's unique ID in Rocka's records.
+                  amount:
+                    format: decimal
+                    type: number
+                    description: Payout amount.
+                  currency:
+                    type: string
+                    description: Payout currency.
+                  requestId:
+                    type: string
+                    description: The payout's unique identifier (to prevent duplicate requests).
+                  createdAt:
+                    type: string
+                    description: Date and time when the payout was registered by Rocka.
+                  status:
+                     description: ''
+                     enum:
+                      - Processing
+                      - Executing
+                      - Failed
+                      - Done
+                  iban:
+                    type: string
+                    description: Recipient's IBAN (International Bank Account Number).
+                  beneficiaryName:
+                    type: string
+                    description: Recipient's full name.
+                  beneficiaryRef:
+                    type: string
+                    description: Bank reference, which appears on the beneficiary's bank statement
+                      once the payout arrives.
+                required:
+                - id
+                - amount
+                - currency
+                - createdAt
+                - status
+                - iban
+                - beneficiaryName
+                - beneficiaryRef
+
+
+          description: ''
+      security:
+      - APItoken: []
+      tags:
+      - Payouts
+      x-codegen-request-body-name: request
+      description: ''
+      summary: Check payout status
 
 
 
