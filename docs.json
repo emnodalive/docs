@@ -77,7 +77,6 @@
       "openapi": "api-reference/openapi.yaml",
       "pages": [
         "POST /api/payments",
-        "GET /api/payments/{id}",
         "POST /api/payments/logo",
         "GET /api/providers/top",
         "POST /api/payments/short-links"
