@@ -83,6 +83,15 @@
       ]
         },
         {
+      "group": "Manage your data",
+      "openapi": "api-reference/openapi.yaml",
+      "pages": [
+        "GET /api/payments",
+        "GET /api/payouts",
+        "GET /balances/api/balance/"
+      ]
+        },
+        {
           "group": "Card payments",
           "pages": [
             "api-reference/card-payments"
