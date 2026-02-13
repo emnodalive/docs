@@ -1,6 +1,6 @@
 ---
-title: "Card payments"
-api: 'POST /api/payments'
+title: "Create a card payment"
+api: "POST /api/payments"
 ---
 
 Use this endpoint to create card payments. Using the payment details from your POST request, it generates a URL that you can use to direct the customer to authorise the payment.
@@ -9,7 +9,7 @@ Use this endpoint to create card payments. Using the payment details from your P
 
 To create a test non-3DS payment, run this request with `"cvv": "111"` in the body.
 
-<Accordion title="Sample request and response (Non-3DS)" icon="fa-code">
+<Accordion icon="fa-code" title="Sample request and response (Non-3DS)">
   ### Sample request
 
   ```Text cURL
@@ -57,7 +57,7 @@ To create a test non-3DS payment, run this request with `"cvv": "111"` in the bo
 
 For repeated purchases, you can use the `cardId` you got in the webhook from the initial payment. For more details on payment webhooks, see [Retrieve a payment](ref:retrieve-a-payment-1).
 
-<Accordion title="Sample request and response (Non-3DS with cardId)" icon="fa-code">
+<Accordion icon="fa-code" title="Sample request and response (Non-3DS with cardId)">
   ### Sample request
 
   ```
@@ -103,7 +103,7 @@ To create a test 3DS payment, run this request with `"CVV": "123"` in the body.
 
 If the `threeDsData` parameter isn't empty and the payment's status is _Awaiting confirmation_, your app will need to redirect the user to the ACS URL or open it in an iFrame. This will redirect the user to their bank's identity verification page that will prompt them to confirm the payment.
 
-<Accordion title="Sample request and response (3DS)" icon="fa-code">
+<Accordion icon="fa-code" title="Sample request and response (3DS)">
   ### Sample request
 
   ```
@@ -159,7 +159,7 @@ To create a test 3DS V2 payment, run this request with `"CVV": "123"` and `"Card
 
 If the `threeDsData` parameter isn't empty and the payment's status is _Awaiting confirmation_, your app will need to redirect the user to URL in the `location` parameter in the response.
 
-<Accordion title="Sample request and response (Non-3DS)" icon="fa-code">
+<Accordion icon="fa-code" title="Sample request and response (Non-3DS)">
   ### Sample request
 
   ```
@@ -212,7 +212,7 @@ If the `threeDsData` parameter isn't empty and the payment's status is _Awaiting
 
 To create a test checkout form payment, run this request with `"cardFormType": "checkout_form"`in the body. This endpoint returns the URL where the customer should be redirected (found in the `url` parameter in the response).
 
-<Accordion title="Sample request and response (Non-3DS)" icon="fa-code">
+<Accordion icon="fa-code" title="Sample request and response (Non-3DS)">
   ### Sample request
 
   ```
