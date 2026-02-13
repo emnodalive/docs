@@ -76,11 +76,7 @@
       "group": "Open banking payments",
       "openapi": "api-reference/openapi.yaml",
       "pages": [
-        "POST /api/payments",
-        "GET /api/payments/id",
-        "POST /api/payments/logo",
-        "POST /api/providers/top",
-        "POST /api/payments/short-links"
+        "POST /api/payments"
       ]
         },
         {
