@@ -38,15 +38,12 @@
           {
             "group": "Card payments",
             "pages": [
-              "card-payments/about-card-payments",
-              "card-payments/integrate-card-payments",
               "card-payments/test-card-data"
             ]
           },
            {
             "group": "Payouts",
             "pages": [
-              "payouts/issue-payouts",
               "payouts/view-payout-metadata",
               "payouts/about-payout-statuses"
             ]

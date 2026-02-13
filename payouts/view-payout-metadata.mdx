@@ -1,0 +1,21 @@
+---
+title: 'View payout metadata'
+---
+
+When you create a payout using our API ([Create a payout](https://docs.rocka.live/reference/create-a-payout#/)), the endpoint returns basic payout metadata. You can access more detailed data in your Rocka Hub.
+
+| Field            | Description                                                                                                                                              | Value                                                     | Availability |
+| :--------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------- | :----------- |
+| Method           | Payout method.                                                                                                                                           | `Card` or `Bank`                                          | Hub          |
+| Payout ID        | Payout's ID in Rocka's records. Corresponds to the `id` field of the API endpoint.                                                                       |                                                           | Hub and API  |
+| Request ID       | Payout's ID in your records.                                                                                                                             |                                                           | Hub and API  |
+| Status           | Corresponds to the `Status` field of the API endpoint.                                                                                                   | `Processing`, `Executing`, `Done`, `Failed` or `Rejected` | Hub and API  |
+| Reject reason    | Defaults to `-`if the payout wasn't rejected.                                                                                                            |                                                           | Hub          |
+| Reference        | Bank reference, which appears on the beneficiary's bank statement once the payout arrives. Corresponds to the `beneficiaryRef`field of the API endpoint. |                                                           | Hub and API  |
+| Fee              | Fee amount.                                                                                                                                              |                                                           | Hub          |
+| Amount           | Payout amount.                                                                                                                                           |                                                           | Hub and API  |
+| Ccy              | Payout currency.                                                                                                                                         | `EUR` or `GBP`                                            | Hub and API  |
+| Created date     | Payout creation timestamp. Corresponds to the `createdAt` field of the API endpoint.                                                                     |                                                           | Hub and API  |
+| Execution date   | Payout execution timestamp.                                                                                                                              |                                                           | Hub and API  |
+| IBAN             | Only for EUR payouts. Corresponds to the `IBAN` field of the API endpoint.                                                                               |                                                           | Hub          |
+| Beneficiary Name | Recipient's full name. Corresponds to the `beneficiaryName` field of the API endpoint.                                                                   |                                                           | Hub          |

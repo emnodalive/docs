@@ -1,0 +1,25 @@
+---
+title: "About payout statuses"
+---
+
+Every payout goes through two temporary statuses (`Processing` and `Executing`) before arriving at a final status, which can be either of `Done`, `Failed` or `Rejected`.
+
+To check the status of a payout, you can:
+
+1. Look up the payout in your [Rocka Hub](https://hub.rocka.live/)
+2. Use the [Check payout status](https://docs.noda.live/reference/check-payout-status#/) API endpoint
+3. Retrieve it with a webhook.
+
+## Payment statuses
+
+| Status     | Description                                                                       |
+| :--------- | :-------------------------------------------------------------------------------- |
+| Processing | The payout has been created and is being processed.                               |
+| Executing  | We're waiting for the bank to confirm the payout has been successfully completed. |
+| Done       | The payout has completed successfully.                                            |
+| Failed     | The payout has failed and cannot be completed.                                    |
+| Rejected   | The payout has been rejected.                                                     |
+
+<Tip>
+You can filter payouts by status when exporting data through Rocka API. For more details, see [Export payouts](https://docs.rocka.live/reference/export-payouts#/).
+</Tip>
